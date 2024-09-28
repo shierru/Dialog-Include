@@ -1,0 +1,9 @@
+{
+    "user": "shierru",
+    "repo": "Dialog-include",
+    "dependencies": [
+        "openmultiplayer/omp-stdlib", 
+        "Zeex/amx_assembly", 
+        "pawn-lang/YSI-Includes"
+    ]
+}
