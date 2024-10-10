@@ -31,8 +31,8 @@
 /**
  * <library>dialog</library>
  */
-#if !defined MAX_DIALOG_FUNCTION 
-    #define MAX_DIALOG_FUNCTION  __namemax
+#if !defined 
+    #define MAX_DIALOG_FUNCTION  (__namemax)
 #endif
 
 /**
@@ -174,6 +174,7 @@ stock bool:Dialog_Close(playerid)
  * <library>dialog</library>
  * <summary>Check if the player has a dialog open.</summary>
  * <param name="playerid">Identifier of the player for whom you want to check</param>
+ * <param name="func">The name of dialog</param>
  */
 stock bool:Dialog_IsOpen(playerid, const func[] = "")
 {
@@ -211,7 +212,7 @@ static stock void:Dialog_Process(playerid, const func[], DIALOG_CALL_TYPES:callt
 
 static stock void:Dialog_Call(playerid, DIALOG_CALL_TYPES:calltype, va_args<>)
 {
-    if(s_PlayerAddress[playerid][calltype] == cellmin)
+    if(!Dialog_IsAddresValid(playerid, calltype))
         return;
 
     if(YSI_CheckNumargs__(2))
