@@ -135,7 +135,7 @@ stock bool:Dialog_Show(playerid, const func[])
  * <param name="button1">The text on the left button</param>
  * <param name="button2">The text on the right button.  Leave it blank ( "" ) to hide it</param>
  */
-stock bool:Dialog_Open(playerid, const func[], const DIALOG_STYLE:style, const caption[], const info[], const button1[], const button2[])
+stock bool:Dialog_Open(playerid, const func[], const DIALOG_STYLE:style, const caption[], const body[], const button1[], const button2[])
 {
 	memcpy(s_PlayerFuncName[playerid], func, 0, (strlen(func) * cellbytes));
 
@@ -143,7 +143,7 @@ stock bool:Dialog_Open(playerid, const func[], const DIALOG_STYLE:style, const c
     Dialog_Process(playerid, func, DIALOG_CALL_TYPE_RESPONSE);
     Dialog_Process(playerid, func, DIALOG_CALL_TYPE_INTERRUPT);
 
-	return ShowPlayerDialog(playerid, DEFAULT_DIALOG_ID, style, caption, info, button1, button2);
+	return ShowPlayerDialog(playerid, DEFAULT_DIALOG_ID, style, caption, body, button1, button2);
 }
 
 /**
