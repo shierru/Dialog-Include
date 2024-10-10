@@ -41,7 +41,7 @@ Shows the player a pre-created template for a dialog (`DialogCreate:`).
 
 
 ```pawn
-Dialog_Open(playerid, func[], DIALOG_STYLE:style, caption[], info[], button1[], button2[])
+Dialog_Open(playerid, func[], style, caption[], body[], button1[], button2[])
 ```
 
 
