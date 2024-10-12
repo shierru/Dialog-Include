@@ -31,7 +31,7 @@
 /**
  * <library>dialog</library>
  */
-#if !defined 
+#if !defined MAX_DIALOG_FUNCTION
     #define MAX_DIALOG_FUNCTION  (__namemax)
 #endif
 
@@ -148,6 +148,20 @@ stock bool:Dialog_Open(playerid, const func[], const DIALOG_STYLE:style, const c
 
 /**
  * <library>dialog</library>
+ * <summary>Check if the player has a dialog open.</summary>
+ * <param name="playerid">Identifier of the player for whom you want to check</param>
+ * <param name="func">The name of dialog</param>
+ */
+stock bool:Dialog_IsOpen(playerid, const func[] = "")
+{
+	if(isnull(func))
+		return s_IsPlayerOpenDialog[playerid];
+
+    return !strcmp(s_PlayerFuncName[playerid], func);
+}
+
+/**
+ * <library>dialog</library>
  * <summary>Close the dialog to the player.</summary>
  * <param name="playerid">The identifier of the player you want to close the dialog from</param>
  */
@@ -168,20 +182,6 @@ stock bool:Dialog_Close(playerid)
     #else
         return ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, " ", " ", " ", "");
     #endif
-}
-
-/**
- * <library>dialog</library>
- * <summary>Check if the player has a dialog open.</summary>
- * <param name="playerid">Identifier of the player for whom you want to check</param>
- * <param name="func">The name of dialog</param>
- */
-stock bool:Dialog_IsOpen(playerid, const func[] = "")
-{
-	if(isnull(func))
-		return s_IsPlayerOpenDialog[playerid];
-
-    return !strcmp(s_PlayerFuncName[playerid], func);
 }
 
 // Static func's
@@ -210,6 +210,11 @@ static stock void:Dialog_Process(playerid, const func[], DIALOG_CALL_TYPES:callt
     s_PlayerAddress[playerid][calltype] = GetPublicAddressFromIndex(funcidx(name));
 }
 
+static stock bool:Dialog_IsAddresValid(playerid, DIALOG_CALL_TYPES:calltype)
+{
+	return (s_PlayerAddress[playerid][calltype] != cellmin ? true : false);
+}
+
 static stock void:Dialog_Call(playerid, DIALOG_CALL_TYPES:calltype, va_args<>)
 {
     if(!Dialog_IsAddresValid(playerid, calltype))
@@ -219,11 +224,6 @@ static stock void:Dialog_Call(playerid, DIALOG_CALL_TYPES:calltype, va_args<>)
         CallFunction(s_PlayerAddress[playerid][calltype]);
     else
         CallFunction(s_PlayerAddress[playerid][calltype], va_start<2>);
-}
-
-static stock bool:Dialog_IsAddresValid(playerid, DIALOG_CALL_TYPES:calltype)
-{
-	return (s_PlayerAddress[playerid][calltype] != cellmin ? true : false);
 }
 
 // Hook's
