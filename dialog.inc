@@ -113,11 +113,14 @@ static bool:s_IsPlayerOpenDialog[MAX_PLAYERS] = {false, ...};
  * <param name="playerid">The identifier of the player you want to show the dialog from</param>
  * <param name="func">The name of the dialog to show to the player</param>
  */
-stock bool:Dialog_Show(playerid, const func[])
+stock bool:Dialog_Show(playerid, const func[], va_args<>)
 {
     Dialog_Process(playerid, func, DIALOG_CALL_TYPE_CREATE);
 
-    Dialog_Call(playerid, DIALOG_CALL_TYPE_CREATE, playerid);
+    if(YSI_CheckNumargs__(2))
+        Dialog_Call(playerid, DIALOG_CALL_TYPE_CREATE, playerid);
+    else
+        Dialog_Call(playerid, DIALOG_CALL_TYPE_CREATE, playerid, va_start<2>);
 
     return true;
 }
